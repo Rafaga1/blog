@@ -1,0 +1,106 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <title>
+        {% block title %}
+                body title
+        {% endblock %}
+    </title>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Navbar</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'posts_url' %}">Posts <span class="sr-only">(current)</span></a>
+      </li>
+         <li class="nav-item">
+        <a class="nav-link" href="{% url 'tags_list_url' %}">Tags</a>
+      </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'post_create_url' %}">Create Post</a>
+        </li>
+         <li class="nav-item">
+        <a class="nav-link" href="{% url 'tag_create_url' %}">Create Tag</a>
+          </li>
+        <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Dropdown
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" href="#">Another action</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+      </li>
+    </ul>
+
+    <form class="form-inline my-2 my-lg-0" action="{% url 'posts_url' %}">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+
+  </div>
+</nav>
+<div class="container">
+    <div class="row">
+        <div class="col-6 offset-md-2">
+
+    {% block body %}
+                base body
+        {% endblock %}
+
+    {% if other_page %}
+<nav aria-label="...">
+  <ul class="pagination">
+    <li class="page-item {% if not page_object.has_previous %}disabled{% endif %}">
+      <a class="page-link" href="?page={% if page_object.has_previous %} {{ page_object.previous_page_number }} {% endif %}" tabindex="-1" aria-disabled="true">Previous</a>
+    </li>
+        {% for n in page_object.paginator.page_range %}
+            {% if page_object.number == n %}
+                <li class="page-item active" aria-current="page">
+                      <a class="page-link" href="?page={{ n }}">{{ n }} <span class="sr-only">(current)</span></a>
+                </li>
+            {% elif n > page_object.number|add:-3 and n < page_object.number|add:3 %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ n }}">{{ n }}</a>
+            </li>
+            {% endif %}
+        {% endfor %}
+    <li class="page-item {% if not page_object.has_next %}disabled{% endif %}">
+      <a class="page-link" href="?page={% if page_object.has_next %} {{ page_object.next_page_number }} {% endif %}">Next</a>
+    </li>
+  </ul>
+</nav>
+    {% endif %}
+
+        </div>
+    </div>
+</div>
+    {% if request.user.is_authenticated and request.user.is_staff %}
+<div class="admin-panel align-items-center">
+    <a href="/admin" class="btn btn-outline-info">Admin</a>
+{% block admin-panel %} {% endblock %}
+</div>
+{% endif %}}
+
+
+
+</body>
+</html>

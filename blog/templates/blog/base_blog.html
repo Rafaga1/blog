@@ -1,0 +1,20 @@
+{% extends 'blog/base.html' %}
+
+{% block admin-panel %}
+
+<div class="btn-group">
+  <button type="button" class="btn btn-success">Create</button>
+  <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <span class="sr-only">Toggle Dropdown</span>
+  </button>
+  <div class="dropdown-menu">
+    <a class="dropdown-item" href="{% url 'post_create_url' %}">Post</a>
+    <a class="dropdown-item" href="{% url 'tag_create_url'%}">Tag</a>
+      <div class="dropdown-divider"></div>
+    <a class="dropdown-item" href="#">Separated link</a>
+  </div>
+</div>
+
+<a href="{{ admin_obj.get_update_url }}" class="btn btn-light edit" style="{% if detail %} display: block; {% endif %}">Edit</a>
+<a href="{{ admin_obj.get_delete_url }}" class="btn btn-danger delete" style="{% if detail %} display: block; {% endif %}">Delete</a>
+{% endblock %}

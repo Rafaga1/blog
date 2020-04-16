@@ -1,0 +1,14 @@
+
+  {% for post in page_object %}
+<div class="card mb-4" >
+  <div class="card-header">
+    {{ post.date_pub}}
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">{{ post.title }}</h5>
+    <p class="card-text">{{ post.body }}</p>
+    <a href="{{ post.get_absolute_url  }}" class="btn btn-primary">Read</a>
+      <a href="{{post.get_delete_url}}" class="btn btn-primary mb-1">Delete</a>
+  </div>
+</div>
+    {% endfor %}

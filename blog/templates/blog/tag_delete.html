@@ -1,0 +1,9 @@
+{% extends 'blog/base_blog.html' %}
+
+{% block title %}
+    Tag delete {{ tag.title|title }} - {{ block.super }}
+{% endblock %}
+
+{% block body %}
+    {% include 'blog/includs/post_tag_delete.html' %}
+{% endblock %}

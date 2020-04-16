@@ -1,0 +1,12 @@
+{% extends 'blog/base_blog.html' %}
+
+
+{% block title %}
+  Posts - {{ block.super }}
+{% endblock %}
+
+{% block body %}
+<div class="mb-1"><h2>Posts:</h2></div>
+  {% include 'blog/includs/posts_tags.html' %}
+
+{% endblock %}

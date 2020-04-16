@@ -1,0 +1,13 @@
+{% extends 'blog/base_blog.html' %}
+
+{% block title %}
+ workin
+{% endblock %}
+
+{% block body %}
+<div class="mb-3"><h3>For {{ tag.title|title }} posts:</h3></div>
+{% for post in tag.posts.all %}
+{% include 'blog/includs/post_tag_detail.html' %}
+
+{% endfor %}
+{% endblock %}
